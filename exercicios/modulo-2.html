@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Exercícios do Módulo 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: caderno de exercícios escuro, igual aos vídeos do curso; uma coluna de 860px, cada aula é uma seção com o exercício como bancada. Tema único escuro, por escolha. */
+:root{
+  color-scheme: dark;
+  --bg:#0B1020; --panel:#121A2F; --panel-2:#0F1628; --line:#26324F; --line-2:#33416A;
+  --text:#EEF2F8; --soft:#C9D2E6; --muted:#8C99B6; --amber:#FFB020; --amber-ink:#1A1300; --teal:#2DD4BF; --red:#F43F5E; --green:#22C55E;
+  --display:"Archivo","Arial Black",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --s-1:clamp(.82rem,.8rem + .1vw,.88rem); --s0:clamp(1rem,.96rem + .2vw,1.06rem);
+  --s1:clamp(1.15rem,1.08rem + .4vw,1.32rem); --s2:clamp(1.45rem,1.25rem + 1vw,1.9rem); --s3:clamp(1.9rem,1.5rem + 2vw,2.8rem);
+  --r:14px; --col:880px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--s0);line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:var(--col);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:var(--s3);font-weight:850}
+h2{font-size:var(--s2);font-weight:800}
+h3{font-size:var(--s1);font-weight:750}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-family:var(--display);font-stretch:125%;font-weight:850;letter-spacing:.14em;font-size:.9rem;white-space:nowrap}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:var(--s-1);color:var(--muted);white-space:nowrap}
+.bar{width:clamp(70px,18vw,160px);height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+
+header.hero{padding-block:clamp(36px,6vw,64px) 24px;display:grid;gap:14px}
+header.hero .lead{color:var(--soft);max-width:62ch}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.toc a{font-family:var(--mono);font-size:var(--s-1);text-decoration:none;color:var(--soft);border:1px solid var(--line-2);border-radius:99px;padding:4px 12px;display:inline-flex;gap:8px;align-items:center}
+.toc a.feito{border-color:rgba(34,197,94,.5);color:var(--green)}
+.toc a.feito::before{content:"✓"}
+
+section.aula{padding-block:clamp(32px,5vw,52px);border-top:1px solid var(--line);display:grid;gap:18px;scroll-margin-top:70px}
+.aula-head{display:grid;gap:8px}
+.aula-head .intro{color:var(--soft);max-width:66ch}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,3vw,24px);display:grid;gap:16px;min-width:0}
+.ex-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.ex-head h3{font-size:var(--s1)}
+.estado{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;border:1px solid var(--line-2);color:var(--muted)}
+.estado.ok{border-color:rgba(34,197,94,.5);color:var(--green);background:rgba(34,197,94,.08)}
+.instr{color:var(--soft);font-size:var(--s-1)}
+.aviso{font-size:var(--s-1);color:var(--muted);border-left:2px solid var(--line-2);padding-left:10px}
+
+/* itens de classificação e escolha */
+.itens{display:grid;gap:10px}
+.item{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:10px;min-width:0}
+.item.certo{border-color:rgba(34,197,94,.55)}
+.item.errado{border-color:rgba(244,63,94,.65)}
+.item .txt{min-width:0}
+.item .txt b{font-weight:600}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px}
+.op{font:inherit;font-size:var(--s-1);font-weight:500;color:var(--soft);background:transparent;border:1px solid var(--line-2);border-radius:99px;padding:6px 14px;cursor:pointer;min-height:36px;text-align:left}
+.op:hover{border-color:var(--muted);color:var(--text)}
+.op[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:600}
+.item.certo .op[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#04210F}
+.item.errado .op[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.op.gabarito{border-color:var(--green);color:var(--green)}
+.expl{font-size:var(--s-1);color:var(--soft);border-top:1px dashed var(--line-2);padding-top:8px}
+.expl b{color:var(--text)}
+
+/* números */
+.campos{display:grid;gap:10px}
+.campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.campo.certo{border-color:rgba(34,197,94,.55)} .campo.errado{border-color:rgba(244,63,94,.65)}
+.campo .expl{grid-column:1/-1}
+@media (max-width:560px){.campo{grid-template-columns:1fr}}
+.inp{display:flex;align-items:center;gap:8px}
+input[type=number],input[type=text],select,textarea{background:var(--bg);border:1px solid var(--line-2);border-radius:9px;color:var(--text);font:500 1rem/1.3 var(--mono);padding:9px 11px;min-width:0}
+input[type=number]{width:9.5em}
+textarea{width:100%;font-family:var(--body);resize:vertical}
+.un{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+
+.acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;font:inherit;font-weight:600;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-p{background:var(--amber);color:var(--amber-ink)} .btn-p:hover{filter:brightness(1.07)}
+.btn-g{background:transparent;color:var(--text);border-color:var(--line-2)} .btn-g:hover{border-color:var(--muted)}
+.btn-sm{min-height:34px;padding:0 14px;font-size:var(--s-1)}
+.result{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+.result.ok{color:var(--green)} .result.mais{color:var(--amber)}
+
+/* ordenar */
+.ordem{display:grid;gap:8px;counter-reset:o}
+.ordem .linha{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ordem .linha::before{counter-increment:o;content:counter(o);font-family:var(--mono);color:var(--amber);font-weight:600;width:1.6em;text-align:center}
+.ordem .linha.certo{border-color:rgba(34,197,94,.55)} .ordem .linha.errado{border-color:rgba(244,63,94,.65)}
+.setas{display:flex;gap:6px}
+.setas button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--soft);cursor:pointer;font:600 1rem var(--mono)}
+.setas button:hover{border-color:var(--muted);color:var(--text)}
+
+/* checklist */
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--green);margin-top:3px;flex:none}
+.check .g{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-top:6px}
+
+/* simuladores */
+.sim{display:grid;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.kpi{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px;min-width:0}
+.kpi span{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-family:var(--display);font-stretch:110%;font-size:var(--s1);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi.am b{color:var(--amber)} .kpi.tl b{color:var(--teal)} .kpi.rd b{color:var(--red)} .kpi.gr b{color:var(--green)}
+.ctl{display:grid;gap:6px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:var(--s-1);color:var(--soft)}
+.ctl label output{font-family:var(--mono);color:var(--text)}
+input[type=range]{width:100%;accent-color:var(--amber)}
+.tabela{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:var(--s-1);font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--panel-2)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+canvas{width:100%;max-width:100%;display:block;border-radius:12px;background:var(--panel-2);border:1px solid var(--line)}
+.log{font-family:var(--mono);font-size:.8rem;color:var(--soft);background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:180px;overflow:auto;display:grid;gap:4px}
+.log .e{color:var(--red)} .log .k{color:var(--green)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:var(--s-1);display:grid;gap:6px}
+</style>
+</head>
+<body>
+
+
+<div class="top"><div class="wrap">
+  <span class="brand"><svg width="22" height="22" viewBox="0 0 64 64" fill="none" stroke="#FFB020" stroke-width="5" stroke-linejoin="round" aria-hidden="true"><path d="M32 6 56 19v26L32 58 8 45V19Z"/><path d="M8 19l24 13 24-13M32 32v26"/></svg>BLOCO ZERO</span>
+  <div class="prog" aria-live="polite"><span id="progTxt">0 de 0</span><span class="bar"><i id="progBar"></i></span></div>
+</div></div>
+
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Bloco Zero · Módulo 2 · exercícios</p>
+    <h1>Carteiras e segurança</h1>
+    <p class="lead">Treine o olho para custódia, frase de recuperação e golpes antes de colocar dinheiro numa carteira.</p>
+    <nav class="toc" id="toc" aria-label="Aulas"></nav>
+  </header>
+  <div id="aulas"></div>
+  <footer>
+    <p>Exercícios do curso Bloco Zero. Os nomes, preços e números são fictícios e servem só para praticar.</p>
+    <p>Nada aqui é recomendação de investimento. O seu progresso fica salvo só neste navegador.</p>
+  </footer>
+</main>
+
+<script>
+const MOD = {"id": "m2", "titulo": "Exercícios do Módulo 2", "eyebrow": "Bloco Zero · Módulo 2 · exercícios", "h1": "Carteiras e segurança", "lead": "Treine o olho para custódia, frase de recuperação e golpes antes de colocar dinheiro numa carteira.", "sims": [], "aulas": [{"n": "2.1", "titulo": "Corretora ou autocustódia", "curto": "Custódia", "exercicios": [{"id": "m2-1", "tipo": "classificar", "titulo": "Quem guarda as chaves?", "categorias": ["Custódia de terceiros", "Autocustódia"], "itens": [{"texto": "Você compra bitcoin numa corretora e deixa o saldo lá.", "certo": "Custódia de terceiros", "porque": "A corretora guarda as chaves e movimenta em seu nome."}, {"texto": "Você instala uma carteira no celular, anota 12 palavras e recebe bitcoin nela.", "certo": "Autocustódia", "porque": "As chaves nascem no seu aparelho, e só você tem a frase."}, {"texto": "Você entra no aplicativo da corretora com e-mail, senha e código de verificação.", "certo": "Custódia de terceiros", "porque": "Login e senha dão acesso à conta da empresa, não às chaves."}, {"texto": "Você guarda bitcoin numa carteira de hardware que só você controla.", "certo": "Autocustódia"}, {"texto": "A empresa trava os saques, e você não consegue tirar as moedas.", "certo": "Custódia de terceiros", "porque": "Foi o que aconteceu com os clientes da FTX em 2022."}, {"texto": "Você perde a frase de recuperação e o celular quebra. Ninguém consegue recuperar as moedas.", "certo": "Autocustódia", "porque": "Na autocustódia, o risco é você: não existe suporte para recuperar."}]}]}, {"n": "2.2", "titulo": "A frase de recuperação", "curto": "Frase", "exercicios": [{"id": "m2-2", "tipo": "classificar", "titulo": "Seguro ou arriscado?", "instr": "Para cada jeito de guardar a frase de recuperação, diga se é seguro ou arriscado.", "categorias": ["Seguro", "Arriscado"], "itens": [{"texto": "Tirar um print da tela com as 12 palavras.", "certo": "Arriscado", "porque": "Prints vão para a galeria e, muitas vezes, para a nuvem."}, {"texto": "Escrever à mão, em papel, e conferir palavra por palavra antes de depositar.", "certo": "Seguro"}, {"texto": "Salvar as palavras no bloco de notas do celular.", "certo": "Arriscado", "porque": "Celulares são roubados e invadidos."}, {"texto": "Mandar as palavras por e-mail para si mesmo, \"só por garantia\".", "certo": "Arriscado", "porque": "Contas de e-mail são invadidas com frequência."}, {"texto": "Gravar as palavras numa placa de metal guardada num local seguro.", "certo": "Seguro", "porque": "Metal resiste a fogo e água; serve bem para valores maiores."}, {"texto": "Digitar as palavras num site que promete conferir se a carteira está segura.", "certo": "Arriscado", "porque": "Quem pede as palavras quer roubar as moedas."}, {"texto": "Ter uma segunda cópia em papel, em outro endereço de confiança.", "certo": "Seguro", "porque": "Protege contra perda ou incêndio num único lugar."}, {"texto": "Escrever as palavras fora de ordem \"para confundir ladrões\" e não anotar a ordem.", "certo": "Arriscado", "porque": "A ordem faz parte da frase. Sem ela, nem você recupera."}]}]}, {"n": "2.3", "titulo": "A carteira de hardware", "curto": "Hardware", "exercicios": [{"id": "m2-3", "tipo": "classificar", "titulo": "Onde a chave privada aparece?", "instr": "Para cada momento de uma transferência feita com carteira de hardware, diga se a chave privada aparece ali.", "categorias": ["A chave aparece aqui", "A chave não aparece"], "embaralhar": false, "itens": [{"texto": "No aplicativo do computador, quando você monta a transferência.", "certo": 1, "porque": "O aplicativo só monta a transferência. Ele nunca vê a chave."}, {"texto": "Dentro do aparelho, na hora de assinar.", "certo": 0, "porque": "A chave nasce e fica dentro do aparelho. A assinatura acontece lá."}, {"texto": "No cabo USB ou no Bluetooth, entre o aparelho e o computador.", "certo": 1, "porque": "Só passa a transferência montada e, depois, a transferência assinada."}, {"texto": "Na transferência assinada que volta para o computador.", "certo": 1, "porque": "A assinatura prova que a chave existe, mas não revela a chave."}, {"texto": "Na frase de recuperação escrita em papel.", "certo": 0, "porque": "A frase gera todas as chaves. Por isso ela vale tanto quanto as moedas."}]}]}, {"n": "2.4", "titulo": "Os golpes mais comuns", "curto": "É golpe?", "exercicios": [{"id": "m2-4", "tipo": "classificar", "titulo": "É golpe? 20 mensagens", "instr": "Leia cada mensagem como se ela tivesse chegado para você. Golpe ou mensagem legítima?", "categorias": ["Golpe", "Legítima"], "itens": [{"texto": "\"Oi! Sou do suporte da corretora. Vi sua dúvida no grupo. Me passe sua frase de recuperação no privado que eu resolvo.\"", "certo": "Golpe", "porque": "Suporte de verdade nunca pede a frase, nem chama no privado."}, {"texto": "Notificação dentro do aplicativo oficial da corretora: \"Seu saque de 0,01 BTC foi concluído.\"", "certo": "Legítima", "porque": "Aviso de operação que você fez, dentro do aplicativo oficial, sem pedir nada."}, {"texto": "\"Robô de arbitragem com 1% ao dia garantido. Indique amigos e ganhe bônus.\"", "certo": "Golpe", "porque": "Rendimento garantido e bônus por indicação: pirâmide."}, {"texto": "Apareceu na sua carteira um token \"PRÊMIO-USDT\" com o link: resgate seu prêmio em claim-usdt.app.", "certo": "Golpe", "porque": "Brinde falso. Ao conectar a carteira, você assina uma autorização para um drenador."}, {"texto": "E-mail: \"Sua conta será bloqueada em 24 horas. Clique aqui para verificar.\" O link leva para binnance-seguranca.com.", "certo": "Golpe", "porque": "Pressa e endereço quase igual ao verdadeiro: phishing."}, {"texto": "A corretora pede, durante o cadastro no site oficial, uma foto do documento e uma selfie.", "certo": "Legítima", "porque": "A verificação de identidade é exigida por lei."}, {"texto": "\"Perdeu cripto em golpe? Recuperamos 100% das suas moedas. Taxa adiantada de R$ 2.000.\"", "certo": "Golpe", "porque": "Golpe da recuperação, feito com quem acabou de ser enganado."}, {"texto": "Alguém que você conheceu num aplicativo de namoro, depois de semanas de conversa, indica uma plataforma onde ele \"ganha muito\".", "certo": "Golpe", "porque": "Golpe do relacionamento: a plataforma é falsa e o saldo nunca pode ser sacado."}, {"texto": "O fabricante da sua carteira de hardware publica no site oficial uma atualização de firmware.", "certo": "Legítima", "porque": "Atualizações vêm pelo site e pelo aplicativo oficiais e nunca pedem a frase."}, {"texto": "Perfil com o nome de um famoso: \"Mande 0,1 BTC e eu devolvo 0,2 BTC. Só hoje!\"", "certo": "Golpe", "porque": "Ninguém dobra o seu dinheiro. Pressa e promessa de ganho fácil."}, {"texto": "No seu histórico aparece uma transferência minúscula, de um endereço que começa e termina igual ao do seu colega.", "certo": "Golpe", "porque": "Golpe do endereço parecido. Nunca copie endereços do histórico."}, {"texto": "A corretora envia o código de verificação que você acabou de pedir para fazer login.", "certo": "Legítima"}, {"texto": "\"Sua carteira foi sorteada! Conecte em nosso site e assine para receber 500 USDT.\"", "certo": "Golpe", "porque": "Assinar em site desconhecido pode dar ao golpista permissão para gastar as suas moedas."}, {"texto": "Um anúncio patrocinado no buscador leva a um site com aparência idêntica à da corretora.", "certo": "Golpe", "porque": "Entre sempre digitando o endereço ou por um favorito salvo."}, {"texto": "Na loja oficial do celular, o aplicativo da corretora aparece publicado pela própria corretora.", "certo": "Legítima", "porque": "Confira sempre o nome de quem publicou."}, {"texto": "\"Somos da equipe do Banco Central. Sua cripto precisa ser migrada para uma carteira regulamentada. Envie para este endereço.\"", "certo": "Golpe", "porque": "Nenhum órgão pede que você transfira moedas."}, {"texto": "\"Grupo VIP: sinais com 95% de acerto. Pague a mensalidade em USDT.\"", "certo": "Golpe", "porque": "Promessa de acerto quase certo é sinal de golpe."}, {"texto": "Seu amigo pede, por mensagem, o seu endereço de bitcoin para te pagar o almoço.", "certo": "Legítima", "porque": "Endereço pode ser compartilhado. O perigo está em entregar a chave ou a frase."}, {"texto": "\"Para liberar seu saque, pague antes 10% de imposto para a plataforma.\"", "certo": "Golpe", "porque": "Plataforma falsa que inventa taxas para reter o dinheiro."}, {"texto": "A corretora avisa por e-mail sobre uma mudança nos termos de uso e não pede clique, senha nem dados.", "certo": "Legítima"}]}]}, {"n": "2.5", "titulo": "O seu checklist de segurança", "curto": "Checklist", "exercicios": [{"id": "m2-5", "tipo": "checklist", "titulo": "Marque o que você já faz", "instr": "Faça uma vez agora e repita a cada três meses. O que ficar sem marcar é a sua lista de tarefas.", "itens": [{"grupo": "Contas"}, "Senha longa e diferente em cada corretora, num gerenciador de senhas", "Verificação em duas etapas por aplicativo autenticador, e não por SMS", {"grupo": "Frase de recuperação"}, "Escrita à mão, conferida e guardada em local seguro", "Nenhuma cópia em foto, print, e-mail ou nuvem", {"grupo": "Endereços e links"}, "Confiro o começo e o fim do endereço antes de enviar", "Entro na corretora por favorito salvo, nunca por anúncio ou mensagem", {"grupo": "Autorizações"}, "Só conecto a carteira em sites conhecidos e leio o que assino", "Uso uma carteira separada, com pouco dinheiro, para testar sites novos", {"grupo": "Divisão e discrição"}, "Deixo no dia a dia só o que uso; o resto fica na carteira fria", "Não conto nem posto quanto tenho em cripto", "Alguém de confiança sabe o que fazer se algo acontecer comigo"]}]}]};
+</script>
+<script>
+// ---------- utilitários ----------
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') e.className = v; else if (k === 'html') e.innerHTML = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v !== undefined && v !== null) e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) e.append(k.nodeType ? k : document.createTextNode(k));
+  return e;
+};
+const fmt = (v, c = 2) => Number(v).toLocaleString('pt-BR', {minimumFractionDigits: c, maximumFractionDigits: c});
+const brl = v => 'R$ ' + fmt(v, 2);
+const usd = v => 'US$ ' + fmt(v, 2);
+const embaralha = (arr, seed) => { const a = arr.slice(); let s = seed || 7; for (let i = a.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; const j = Math.floor(s / 233280 * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('bz-' + MOD.id + '-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('bz-' + MOD.id + '-' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const parseNum = s => { if (s == null) return NaN; s = String(s).trim().replace(/\s/g, '').replace(/^R\$|^US\$/i, ''); if (/,\d+$/.test(s) || (s.includes(',') && s.includes('.'))) s = s.replace(/\./g, '').replace(',', '.'); return parseFloat(s); };
+
+// ---------- progresso ----------
+const feitos = new Set(store.get('feitos', []));
+const todos = [];
+function marcar(id, ok) {
+  if (ok) feitos.add(id); store.set('feitos', [...feitos]);
+  const st = document.getElementById('st-' + id); if (st && feitos.has(id)) { st.textContent = 'Concluído'; st.classList.add('ok'); }
+  atualizar();
+}
+function atualizar() {
+  const n = todos.filter(i => feitos.has(i)).length;
+  $('#progTxt').textContent = `${n} de ${todos.length} feitos`;
+  $('#progBar').style.width = (todos.length ? 100 * n / todos.length : 0) + '%';
+  document.querySelectorAll('.toc a').forEach(a => { const ids = a.dataset.ex.split(','); a.classList.toggle('feito', ids.every(i => feitos.has(i))); });
+}
+
+// ---------- tipos de exercício ----------
+const TIPOS = {};
+
+// classificar: cada item recebe uma categoria; opções podem variar por item
+TIPOS.classificar = (ex, box) => {
+  const cats = ex.categorias;
+  const itens = ex.embaralhar === false ? ex.itens : embaralha(ex.itens, ex.itens.length * 13 + 5);
+  const esc = {};
+  const lista = el('div', {class: 'itens'});
+  itens.forEach((it, i) => {
+    const ops = it.opcoes || cats;
+    const row = el('div', {class: 'item'});
+    const bts = ops.map((c, k) => el('button', {class: 'op', type: 'button', 'aria-pressed': 'false', onclick: () => {
+      esc[i] = k; bts.forEach((b, j) => b.setAttribute('aria-pressed', j === k ? 'true' : 'false')); row.classList.remove('certo', 'errado'); exp.hidden = true; bts.forEach(b => b.classList.remove('gabarito'));
+    }}, c));
+    const exp = el('p', {class: 'expl', hidden: ''});
+    row.append(el('div', {class: 'txt', html: it.texto}), el('div', {class: 'opcoes', role: 'group'}, bts), exp);
+    row._it = it; row._ops = ops; row._bts = bts; row._exp = exp;
+    lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach((row, i) => {
+      const it = row._it, ops = row._ops, k = esc[i];
+      const alvo = typeof it.certo === 'number' ? it.certo : ops.indexOf(it.certo);
+      if (k === undefined) { row.classList.remove('certo', 'errado'); return; }
+      resp++;
+      const livre = it.certo === -1, ok = livre || k === alvo; if (ok) certos++;
+      if (livre) { row.classList.remove('certo', 'errado'); return; }
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._bts.forEach((b, j) => b.classList.toggle('gabarito', !ok && j === alvo));
+      if (it.porque) { row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${ops[alvo]}.</b> `) + it.porque; row._exp.hidden = false; }
+    });
+    const n = itens.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    const livres = itens.every(i => i.certo === -1);
+    res.textContent = livres ? (resp < n ? `faltam ${n - resp}` : 'Respondido · exercício concluído') : resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : ' · revise os marcados em vermelho');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir respostas'), res));
+};
+
+// numerico: perguntas com resposta numérica e tolerância
+TIPOS.numerico = (ex, box) => {
+  const lista = el('div', {class: 'campos'});
+  ex.perguntas.forEach((q, i) => {
+    const inp = el('input', {type: 'text', inputmode: 'decimal', id: `${ex.id}-q${i}`, 'aria-label': 'resposta', autocomplete: 'off'});
+    const exp = el('p', {class: 'expl', hidden: ''});
+    const row = el('div', {class: 'campo'}, el('div', {class: 'txt', html: q.texto}), el('div', {class: 'inp'}, q.antes ? el('span', {class: 'un'}, q.antes) : null, inp, q.un ? el('span', {class: 'un'}, q.un) : null), exp);
+    row._q = q; row._inp = inp; row._exp = exp; lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach(row => {
+      const q = row._q, v = parseNum(row._inp.value);
+      if (isNaN(v)) { row.classList.remove('certo', 'errado'); row._exp.hidden = true; return; }
+      resp++;
+      const tol = q.tol ?? Math.max(Math.abs(q.resposta) * 0.01, 0.005);
+      const ok = Math.abs(v - q.resposta) <= tol; if (ok) certos++;
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${q.mostra ?? fmt(q.resposta, q.casas ?? 2)}.</b> `) + (q.conta || '');
+      row._exp.hidden = false;
+    });
+    const n = ex.perguntas.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : '');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir contas'), res,
+    el('span', {class: 'un'}, 'Use vírgula ou ponto para decimais.')));
+};
+
+// ordenar: passos para colocar na ordem certa
+TIPOS.ordenar = (ex, box) => {
+  let ordem = embaralha(ex.passos.map((_, i) => i), 11);
+  if (ordem.every((v, i) => v === i)) ordem.reverse();
+  const lista = el('div', {class: 'ordem'});
+  const res = el('span', {class: 'result'});
+  const desenha = () => {
+    lista.innerHTML = '';
+    ordem.forEach((p, pos) => {
+      lista.append(el('div', {class: 'linha'}, el('span', {}, ex.passos[p]), el('div', {class: 'setas'},
+        el('button', {type: 'button', 'aria-label': 'subir', onclick: () => { if (pos > 0) { [ordem[pos - 1], ordem[pos]] = [ordem[pos], ordem[pos - 1]]; desenha(); } }}, '↑'),
+        el('button', {type: 'button', 'aria-label': 'descer', onclick: () => { if (pos < ordem.length - 1) { [ordem[pos + 1], ordem[pos]] = [ordem[pos], ordem[pos + 1]]; desenha(); } }}, '↓'))));
+    });
+    res.textContent = ''; res.className = 'result';
+  };
+  desenha();
+  const conferir = () => {
+    let certos = 0;
+    [...lista.children].forEach((row, pos) => { const ok = ordem[pos] === pos; if (ok) certos++; row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok); });
+    const n = ordem.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = certos === n ? 'Ordem certa · exercício concluído' : `${certos} de ${n} na posição certa`;
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir ordem'), res));
+};
+
+// checklist: autoavaliação; conclui quando tudo marcado
+TIPOS.checklist = (ex, box) => {
+  const salvo = store.get('ck-' + ex.id, []);
+  const lista = el('div', {class: 'check'});
+  let grupo = null;
+  ex.itens.forEach((t, i) => {
+    if (typeof t === 'object' && t.grupo) { lista.append(el('p', {class: 'g'}, t.grupo)); return; }
+    const cb = el('input', {type: 'checkbox', id: `${ex.id}-c${i}`});
+    cb.checked = salvo.includes(i);
+    cb.addEventListener('change', () => { const s = [...lista.querySelectorAll('input')].map((c, j) => c.checked ? +c.id.split('-c')[1] : -1).filter(x => x >= 0); store.set('ck-' + ex.id, s); conta(); });
+    lista.append(el('label', {for: cb.id}, cb, el('span', {}, t)));
+  });
+  const res = el('span', {class: 'result'});
+  const conta = () => { const cs = [...lista.querySelectorAll('input')], n = cs.filter(c => c.checked).length; res.textContent = `${n} de ${cs.length} marcados`; res.className = 'result ' + (n === cs.length ? 'ok' : ''); if (n === cs.length) marcar(ex.id, true); };
+  box.append(lista, el('div', {class: 'acoes'}, res));
+  conta();
+};
+
+// formulário livre: campos de texto salvos no navegador + cópia do texto montado
+TIPOS.formulario = (ex, box) => {
+  const salvo = store.get('fm-' + ex.id, {});
+  const campos = ex.campos.map((c, i) => {
+    const id = `${ex.id}-f${i}`;
+    const ta = el('textarea', {id, rows: c.linhas || 3, placeholder: c.exemplo || ''});
+    ta.value = salvo[i] || '';
+    ta.addEventListener('input', () => { salvo[i] = ta.value; store.set('fm-' + ex.id, salvo); verifica(); });
+    return {c, ta, node: el('div', {class: 'ctl'}, el('label', {for: id}, el('span', {}, el('b', {}, c.titulo), c.dica ? el('span', {class: 'muted'}, ' · ' + c.dica) : null)), ta)};
+  });
+  const res = el('span', {class: 'result'});
+  const verifica = () => { const n = campos.filter(k => k.ta.value.trim().length >= 3).length; res.textContent = `${n} de ${campos.length} campos preenchidos`; res.className = 'result ' + (n === campos.length ? 'ok' : ''); if (n === campos.length) marcar(ex.id, true); };
+  const copiar = async (ev) => {
+    const txt = campos.map(k => `${k.c.titulo}\n${k.ta.value.trim() || '(em branco)'}`).join('\n\n');
+    try { await navigator.clipboard.writeText(txt); ev.target.textContent = 'Copiado'; } catch (e) { const t = el('textarea', {rows: 8}); t.value = txt; box.append(t); t.select(); ev.target.textContent = 'Selecione e copie o texto abaixo'; }
+    setTimeout(() => ev.target.textContent = 'Copiar o plano', 2500);
+  };
+  box.append(el('div', {class: 'campos'}, campos.map(k => k.node)), el('div', {class: 'acoes'}, el('button', {class: 'btn btn-g', type: 'button', onclick: copiar}, 'Copiar o plano'), res));
+  verifica();
+};
+
+// simuladores específicos (definidos por módulo)
+const SIMS = {};
+TIPOS.sim = (ex, box) => SIMS[ex.sim](ex, box, ok => marcar(ex.id, ok));
+</script>
+<script>
+
+</script>
+<script>
+// ---------- montagem ----------
+const toc = $('#toc'), cont = $('#aulas');
+MOD.aulas.forEach(a => {
+  const sec = el('section', {class: 'aula', id: 'aula-' + a.n.replace('.', '-')});
+  sec.append(el('div', {class: 'aula-head'}, el('p', {class: 'eyebrow'}, `Aula ${a.n}`), el('h2', {}, a.titulo), a.intro ? el('p', {class: 'intro', html: a.intro}) : null));
+  a.exercicios.forEach(ex => {
+    todos.push(ex.id);
+    const box = el('div', {class: 'ex', id: ex.id});
+    box.append(el('div', {class: 'ex-head'}, el('h3', {}, ex.titulo), el('span', {class: 'estado', id: 'st-' + ex.id}, 'A fazer')));
+    if (ex.instr) box.append(el('p', {class: 'instr', html: ex.instr}));
+    TIPOS[ex.tipo](ex, box);
+    if (ex.nota) box.append(el('p', {class: 'aviso', html: ex.nota}));
+    sec.append(box);
+  });
+  cont.append(sec);
+  toc.append(el('a', {href: '#' + sec.id, 'data-ex': a.exercicios.map(e => e.id).join(',')}, `${a.n} ${a.curto || a.titulo}`));
+});
+todos.forEach(id => { if (feitos.has(id)) marcar(id, true); });
+atualizar();
+</script>
+
+</body>
+</html>

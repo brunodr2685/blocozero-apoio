@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Exercícios do Módulo 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: caderno de exercícios escuro, igual aos vídeos do curso; uma coluna de 860px, cada aula é uma seção com o exercício como bancada. Tema único escuro, por escolha. */
+:root{
+  color-scheme: dark;
+  --bg:#0B1020; --panel:#121A2F; --panel-2:#0F1628; --line:#26324F; --line-2:#33416A;
+  --text:#EEF2F8; --soft:#C9D2E6; --muted:#8C99B6; --amber:#FFB020; --amber-ink:#1A1300; --teal:#2DD4BF; --red:#F43F5E; --green:#22C55E;
+  --display:"Archivo","Arial Black",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --s-1:clamp(.82rem,.8rem + .1vw,.88rem); --s0:clamp(1rem,.96rem + .2vw,1.06rem);
+  --s1:clamp(1.15rem,1.08rem + .4vw,1.32rem); --s2:clamp(1.45rem,1.25rem + 1vw,1.9rem); --s3:clamp(1.9rem,1.5rem + 2vw,2.8rem);
+  --r:14px; --col:880px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--s0);line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:var(--col);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:var(--s3);font-weight:850}
+h2{font-size:var(--s2);font-weight:800}
+h3{font-size:var(--s1);font-weight:750}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-family:var(--display);font-stretch:125%;font-weight:850;letter-spacing:.14em;font-size:.9rem;white-space:nowrap}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:var(--s-1);color:var(--muted);white-space:nowrap}
+.bar{width:clamp(70px,18vw,160px);height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+
+header.hero{padding-block:clamp(36px,6vw,64px) 24px;display:grid;gap:14px}
+header.hero .lead{color:var(--soft);max-width:62ch}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.toc a{font-family:var(--mono);font-size:var(--s-1);text-decoration:none;color:var(--soft);border:1px solid var(--line-2);border-radius:99px;padding:4px 12px;display:inline-flex;gap:8px;align-items:center}
+.toc a.feito{border-color:rgba(34,197,94,.5);color:var(--green)}
+.toc a.feito::before{content:"✓"}
+
+section.aula{padding-block:clamp(32px,5vw,52px);border-top:1px solid var(--line);display:grid;gap:18px;scroll-margin-top:70px}
+.aula-head{display:grid;gap:8px}
+.aula-head .intro{color:var(--soft);max-width:66ch}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,3vw,24px);display:grid;gap:16px;min-width:0}
+.ex-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.ex-head h3{font-size:var(--s1)}
+.estado{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;border:1px solid var(--line-2);color:var(--muted)}
+.estado.ok{border-color:rgba(34,197,94,.5);color:var(--green);background:rgba(34,197,94,.08)}
+.instr{color:var(--soft);font-size:var(--s-1)}
+.aviso{font-size:var(--s-1);color:var(--muted);border-left:2px solid var(--line-2);padding-left:10px}
+
+/* itens de classificação e escolha */
+.itens{display:grid;gap:10px}
+.item{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:10px;min-width:0}
+.item.certo{border-color:rgba(34,197,94,.55)}
+.item.errado{border-color:rgba(244,63,94,.65)}
+.item .txt{min-width:0}
+.item .txt b{font-weight:600}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px}
+.op{font:inherit;font-size:var(--s-1);font-weight:500;color:var(--soft);background:transparent;border:1px solid var(--line-2);border-radius:99px;padding:6px 14px;cursor:pointer;min-height:36px;text-align:left}
+.op:hover{border-color:var(--muted);color:var(--text)}
+.op[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:600}
+.item.certo .op[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#04210F}
+.item.errado .op[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.op.gabarito{border-color:var(--green);color:var(--green)}
+.expl{font-size:var(--s-1);color:var(--soft);border-top:1px dashed var(--line-2);padding-top:8px}
+.expl b{color:var(--text)}
+
+/* números */
+.campos{display:grid;gap:10px}
+.campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.campo.certo{border-color:rgba(34,197,94,.55)} .campo.errado{border-color:rgba(244,63,94,.65)}
+.campo .expl{grid-column:1/-1}
+@media (max-width:560px){.campo{grid-template-columns:1fr}}
+.inp{display:flex;align-items:center;gap:8px}
+input[type=number],input[type=text],select,textarea{background:var(--bg);border:1px solid var(--line-2);border-radius:9px;color:var(--text);font:500 1rem/1.3 var(--mono);padding:9px 11px;min-width:0}
+input[type=number]{width:9.5em}
+textarea{width:100%;font-family:var(--body);resize:vertical}
+.un{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+
+.acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;font:inherit;font-weight:600;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-p{background:var(--amber);color:var(--amber-ink)} .btn-p:hover{filter:brightness(1.07)}
+.btn-g{background:transparent;color:var(--text);border-color:var(--line-2)} .btn-g:hover{border-color:var(--muted)}
+.btn-sm{min-height:34px;padding:0 14px;font-size:var(--s-1)}
+.result{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+.result.ok{color:var(--green)} .result.mais{color:var(--amber)}
+
+/* ordenar */
+.ordem{display:grid;gap:8px;counter-reset:o}
+.ordem .linha{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ordem .linha::before{counter-increment:o;content:counter(o);font-family:var(--mono);color:var(--amber);font-weight:600;width:1.6em;text-align:center}
+.ordem .linha.certo{border-color:rgba(34,197,94,.55)} .ordem .linha.errado{border-color:rgba(244,63,94,.65)}
+.setas{display:flex;gap:6px}
+.setas button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--soft);cursor:pointer;font:600 1rem var(--mono)}
+.setas button:hover{border-color:var(--muted);color:var(--text)}
+
+/* checklist */
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--green);margin-top:3px;flex:none}
+.check .g{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-top:6px}
+
+/* simuladores */
+.sim{display:grid;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.kpi{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px;min-width:0}
+.kpi span{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-family:var(--display);font-stretch:110%;font-size:var(--s1);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi.am b{color:var(--amber)} .kpi.tl b{color:var(--teal)} .kpi.rd b{color:var(--red)} .kpi.gr b{color:var(--green)}
+.ctl{display:grid;gap:6px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:var(--s-1);color:var(--soft)}
+.ctl label output{font-family:var(--mono);color:var(--text)}
+input[type=range]{width:100%;accent-color:var(--amber)}
+.tabela{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:var(--s-1);font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--panel-2)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+canvas{width:100%;max-width:100%;display:block;border-radius:12px;background:var(--panel-2);border:1px solid var(--line)}
+.log{font-family:var(--mono);font-size:.8rem;color:var(--soft);background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:180px;overflow:auto;display:grid;gap:4px}
+.log .e{color:var(--red)} .log .k{color:var(--green)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:var(--s-1);display:grid;gap:6px}
+</style>
+</head>
+<body>
+
+
+<div class="top"><div class="wrap">
+  <span class="brand"><svg width="22" height="22" viewBox="0 0 64 64" fill="none" stroke="#FFB020" stroke-width="5" stroke-linejoin="round" aria-hidden="true"><path d="M32 6 56 19v26L32 58 8 45V19Z"/><path d="M8 19l24 13 24-13M32 32v26"/></svg>BLOCO ZERO</span>
+  <div class="prog" aria-live="polite"><span id="progTxt">0 de 0</span><span class="bar"><i id="progBar"></i></span></div>
+</div></div>
+
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Bloco Zero · Módulo 3 · exercícios</p>
+    <h1>Comprar, guardar e transferir</h1>
+    <p class="lead">Compare custos, escolha a rede certa e monte a transferência de teste sem arriscar nada.</p>
+    <nav class="toc" id="toc" aria-label="Aulas"></nav>
+  </header>
+  <div id="aulas"></div>
+  <footer>
+    <p>Exercícios do curso Bloco Zero. Os nomes, preços e números são fictícios e servem só para praticar.</p>
+    <p>Nada aqui é recomendação de investimento. O seu progresso fica salvo só neste navegador.</p>
+  </footer>
+</main>
+
+<script>
+const MOD = {"id": "m3", "titulo": "Exercícios do Módulo 3", "eyebrow": "Bloco Zero · Módulo 3 · exercícios", "h1": "Comprar, guardar e transferir", "lead": "Compare custos, escolha a rede certa e monte a transferência de teste sem arriscar nada.", "sims": [], "aulas": [{"n": "3.1", "titulo": "Corretoras e Pix", "curto": "Custo total", "intro": "Uma corretora fictícia mostra: bitcoin a R$ 500.000 no livro de ofertas. Na compra rápida, o preço vem com 1,5% de margem. A taxa de negociação do livro é 0,2%.", "exercicios": [{"id": "m3-1", "tipo": "numerico", "titulo": "Compare o custo total de R$ 1.000 em bitcoin", "perguntas": [{"texto": "Pela compra rápida, o preço efetivo é 1,5% acima: R$ 507.500. Quantos BTC você recebe com R$ 1.000?", "resposta": 0.00197044, "tol": 1e-06, "un": "BTC", "mostra": "0,00197044 BTC", "conta": "1.000 ÷ 507.500 = 0,00197044 BTC."}, {"texto": "Pelo livro, você paga 0,2% de taxa: sobram R$ 998 para comprar a R$ 500.000. Quantos BTC você recebe?", "resposta": 0.001996, "tol": 1e-06, "un": "BTC", "mostra": "0,001996 BTC", "conta": "998 ÷ 500.000 = 0,001996 BTC."}, {"texto": "Quantos reais, aproximadamente, você economizou comprando pelo livro?", "antes": "R$", "resposta": 12.78, "tol": 0.6, "mostra": "cerca de R$ 12,78", "conta": "(0,001996 − 0,00197044) × 500.000 ≈ R$ 12,78. Pequeno numa compra, grande ao longo de muitas."}]}]}, {"n": "3.2", "titulo": "Redes e endereços", "curto": "Rede certa", "exercicios": [{"id": "m3-2", "tipo": "classificar", "titulo": "Simulador de transferência: escolha a rede", "instr": "Em cada envio, escolha a rede que faz o dinheiro chegar.", "categorias": ["Ethereum", "Tron", "Solana", "Bitcoin"], "itens": [{"texto": "Enviar bitcoin para o endereço <span class='mono'>bc1qxy2k…0wlh</span>, de uma carteira de bitcoin.", "certo": "Bitcoin"}, {"texto": "Depositar USDT numa corretora cuja tela diz: \"aceitamos USDT apenas pela rede Ethereum\".", "certo": "Ethereum", "porque": "A rede de quem envia tem que ser a aceita por quem recebe, mesmo que outra seja mais barata."}, {"texto": "Enviar SOL para o endereço <span class='mono'>7xKXtg2CW87d…Hj9sQ</span>.", "certo": "Solana", "porque": "SOL vive na rede Solana, e o endereço tem o formato dela."}, {"texto": "O destino mostra o endereço <span class='mono'>TQn9Y2khEsLJ…8z1a</span> e a etiqueta \"USDT · TRC-20\".", "certo": "Tron", "porque": "TRC-20 é o padrão de tokens da rede Tron, cujos endereços começam com T."}, {"texto": "Enviar ether para <span class='mono'>0x71C7656E…976F</span>, numa carteira que só usa a rede principal do Ethereum.", "certo": "Ethereum"}, {"texto": "A corretora de destino aceita USDT por Tron e por Solana, e o endereço é <span class='mono'>9WzDXwBbmkg8…AWWM</span>.", "certo": "Solana", "porque": "O endereço é longo, sem 0x nem T no início: formato Solana."}]}]}, {"n": "3.3", "titulo": "Taxas e memo", "curto": "Taxas", "exercicios": [{"id": "m3-3", "tipo": "numerico", "titulo": "Quanto chega do outro lado?", "instr": "Valores fictícios. Considere que a taxa de saque da corretora já inclui a taxa de rede.", "perguntas": [{"texto": "Você saca 100 USDT pela rede Tron, com taxa de saque de 1 USDT. Quanto chega?", "resposta": 99, "un": "USDT", "tol": 0.01, "mostra": "99 USDT", "conta": "100 − 1 = 99 USDT."}, {"texto": "Os mesmos 100 USDT pela rede Ethereum, com taxa de saque de 4,5 USDT. Quanto chega?", "resposta": 95.5, "un": "USDT", "tol": 0.01, "mostra": "95,5 USDT", "conta": "100 − 4,5 = 95,5 USDT. Mesma moeda, rede mais cara."}, {"texto": "Você saca 0,002 BTC com taxa de 0,0002 BTC. Que porcentagem do valor ficou na taxa?", "resposta": 10, "un": "%", "tol": 0.05, "mostra": "10%", "conta": "0,0002 ÷ 0,002 = 10%. Saques pequenos pagam proporcionalmente mais."}, {"texto": "Você envia 50 XRP para a corretora sem o memo. Quanto cai na sua conta da corretora, de imediato?", "resposta": 0, "un": "XRP", "tol": 0.01, "mostra": "0 XRP", "conta": "Sem o memo, o dinheiro chega na corretora, mas não cai na sua conta. Recuperar exige chamado e espera."}]}]}, {"n": "3.4", "titulo": "A transferência de teste", "curto": "Teste", "exercicios": [{"id": "m3-4", "tipo": "ordenar", "titulo": "Coloque os passos na ordem", "instr": "Use as setas para ordenar a primeira transferência para um endereço novo.", "passos": ["No destino, abrir o depósito e escolher a moeda e a rede", "Copiar o endereço e, se aparecer, o memo", "Na origem, abrir o saque com a mesma moeda e a mesma rede", "Colar o endereço e conferir o começo, o fim e o memo", "Enviar um valor pequeno, acima do mínimo de depósito", "Acompanhar o hash da transação num explorador de blocos", "Conferir se o valor chegou certo no destino", "Enviar o restante, para o mesmo endereço e pela mesma rede"]}]}]};
+</script>
+<script>
+// ---------- utilitários ----------
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') e.className = v; else if (k === 'html') e.innerHTML = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v !== undefined && v !== null) e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) e.append(k.nodeType ? k : document.createTextNode(k));
+  return e;
+};
+const fmt = (v, c = 2) => Number(v).toLocaleString('pt-BR', {minimumFractionDigits: c, maximumFractionDigits: c});
+const brl = v => 'R$ ' + fmt(v, 2);
+const usd = v => 'US$ ' + fmt(v, 2);
+const embaralha = (arr, seed) => { const a = arr.slice(); let s = seed || 7; for (let i = a.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; const j = Math.floor(s / 233280 * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('bz-' + MOD.id + '-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('bz-' + MOD.id + '-' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const parseNum = s => { if (s == null) return NaN; s = String(s).trim().replace(/\s/g, '').replace(/^R\$|^US\$/i, ''); if (/,\d+$/.test(s) || (s.includes(',') && s.includes('.'))) s = s.replace(/\./g, '').replace(',', '.'); return parseFloat(s); };
+
+// ---------- progresso ----------
+const feitos = new Set(store.get('feitos', []));
+const todos = [];
+function marcar(id, ok) {
+  if (ok) feitos.add(id); store.set('feitos', [...feitos]);
+  const st = document.getElementById('st-' + id); if (st && feitos.has(id)) { st.textContent = 'Concluído'; st.classList.add('ok'); }
+  atualizar();
+}
+function atualizar() {
+  const n = todos.filter(i => feitos.has(i)).length;
+  $('#progTxt').textContent = `${n} de ${todos.length} feitos`;
+  $('#progBar').style.width = (todos.length ? 100 * n / todos.length : 0) + '%';
+  document.querySelectorAll('.toc a').forEach(a => { const ids = a.dataset.ex.split(','); a.classList.toggle('feito', ids.every(i => feitos.has(i))); });
+}
+
+// ---------- tipos de exercício ----------
+const TIPOS = {};
+
+// classificar: cada item recebe uma categoria; opções podem variar por item
+TIPOS.classificar = (ex, box) => {
+  const cats = ex.categorias;
+  const itens = ex.embaralhar === false ? ex.itens : embaralha(ex.itens, ex.itens.length * 13 + 5);
+  const esc = {};
+  const lista = el('div', {class: 'itens'});
+  itens.forEach((it, i) => {
+    const ops = it.opcoes || cats;
+    const row = el('div', {class: 'item'});
+    const bts = ops.map((c, k) => el('button', {class: 'op', type: 'button', 'aria-pressed': 'false', onclick: () => {
+      esc[i] = k; bts.forEach((b, j) => b.setAttribute('aria-pressed', j === k ? 'true' : 'false')); row.classList.remove('certo', 'errado'); exp.hidden = true; bts.forEach(b => b.classList.remove('gabarito'));
+    }}, c));
+    const exp = el('p', {class: 'expl', hidden: ''});
+    row.append(el('div', {class: 'txt', html: it.texto}), el('div', {class: 'opcoes', role: 'group'}, bts), exp);
+    row._it = it; row._ops = ops; row._bts = bts; row._exp = exp;
+    lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach((row, i) => {
+      const it = row._it, ops = row._ops, k = esc[i];
+      const alvo = typeof it.certo === 'number' ? it.certo : ops.indexOf(it.certo);
+      if (k === undefined) { row.classList.remove('certo', 'errado'); return; }
+      resp++;
+      const livre = it.certo === -1, ok = livre || k === alvo; if (ok) certos++;
+      if (livre) { row.classList.remove('certo', 'errado'); return; }
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._bts.forEach((b, j) => b.classList.toggle('gabarito', !ok && j === alvo));
+      if (it.porque) { row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${ops[alvo]}.</b> `) + it.porque; row._exp.hidden = false; }
+    });
+    const n = itens.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    const livres = itens.every(i => i.certo === -1);
+    res.textContent = livres ? (resp < n ? `faltam ${n - resp}` : 'Respondido · exercício concluído') : resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : ' · revise os marcados em vermelho');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir respostas'), res));
+};
+
+// numerico: perguntas com resposta numérica e tolerância
+TIPOS.numerico = (ex, box) => {
+  const lista = el('div', {class: 'campos'});
+  ex.perguntas.forEach((q, i) => {
+    const inp = el('input', {type: 'text', inputmode: 'decimal', id: `${ex.id}-q${i}`, 'aria-label': 'resposta', autocomplete: 'off'});
+    const exp = el('p', {class: 'expl', hidden: ''});
+    const row = el('div', {class: 'campo'}, el('div', {class: 'txt', html: q.texto}), el('div', {class: 'inp'}, q.antes ? el('span', {class: 'un'}, q.antes) : null, inp, q.un ? el('span', {class: 'un'}, q.un) : null), exp);
+    row._q = q; row._inp = inp; row._exp = exp; lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach(row => {
+      const q = row._q, v = parseNum(row._inp.value);
+      if (isNaN(v)) { row.classList.remove('certo', 'errado'); row._exp.hidden = true; return; }
+      resp++;
+      const tol = q.tol ?? Math.max(Math.abs(q.resposta) * 0.01, 0.005);
+      const ok = Math.abs(v - q.resposta) <= tol; if (ok) certos++;
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${q.mostra ?? fmt(q.resposta, q.casas ?? 2)}.</b> `) + (q.conta || '');
+      row._exp.hidden = false;
+    });
+    const n = ex.perguntas.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : '');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir contas'), res,
+    el('span', {class: 'un'}, 'Use vírgula ou ponto para decimais.')));
+};
+
+// ordenar: passos para colocar na ordem certa
+TIPOS.ordenar = (ex, box) => {
+  let ordem = embaralha(ex.passos.map((_, i) => i), 11);
+  if (ordem.every((v, i) => v === i)) ordem.reverse();
+  const lista = el('div', {class: 'ordem'});
+  const res = el('span', {class: 'result'});
+  const desenha = () => {
+    lista.innerHTML = '';
+    ordem.forEach((p, pos) => {
+      lista.append(el('div', {class: 'linha'}, el('span', {}, ex.passos[p]), el('div', {class: 'setas'},
+        el('button', {type: 'button', 'aria-label': 'subir', onclick: () => { if (pos > 0) { [ordem[pos - 1], ordem[pos]] = [ordem[pos], ordem[pos - 1]]; desenha(); } }}, '↑'),
+        el('button', {type: 'button', 'aria-label': 'descer', onclick: () => { if (pos < ordem.length - 1) { [ordem[pos + 1], ordem[pos]] = [ordem[pos], ordem[pos + 1]]; desenha(); } }}, '↓'))));
+    });
+    res.textContent = ''; res.className = 'result';
+  };
+  desenha();
+  const conferir = () => {
+    let certos = 0;
+    [...lista.children].forEach((row, pos) => { const ok = ordem[pos] === pos; if (ok) certos++; row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok); });
+    const n = ordem.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = certos === n ? 'Ordem certa · exercício concluído' : `${certos} de ${n} na posição certa`;
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir ordem'), res));
+};
+
+// checklist: autoavaliação; conclui quando tudo marcado
+TIPOS.checklist = (ex, box) => {
+  const salvo = store.get('ck-' + ex.id, []);
+  const lista = el('div', {class: 'check'});
+  let grupo = null;
+  ex.itens.forEach((t, i) => {
+    if (typeof t === 'object' && t.grupo) { lista.append(el('p', {class: 'g'}, t.grupo)); return; }
+    const cb = el('input', {type: 'checkbox', id: `${ex.id}-c${i}`});
+    cb.checked = salvo.includes(i);
+    cb.addEventListener('change', () => { const s = [...lista.querySelectorAll('input')].map((c, j) => c.checked ? +c.id.split('-c')[1] : -1).filter(x => x >= 0); store.set('ck-' + ex.id, s); conta(); });
+    lista.append(el('label', {for: cb.id}, cb, el('span', {}, t)));
+  });
+  const res = el('span', {class: 'result'});
+  const conta = () => { const cs = [...lista.querySelectorAll('input')], n = cs.filter(c => c.checked).length; res.textContent = `${n} de ${cs.length} marcados`; res.className = 'result ' + (n === cs.length ? 'ok' : ''); if (n === cs.length) marcar(ex.id, true); };
+  box.append(lista, el('div', {class: 'acoes'}, res));
+  conta();
+};
+
+// formulário livre: campos de texto salvos no navegador + cópia do texto montado
+TIPOS.formulario = (ex, box) => {
+  const salvo = store.get('fm-' + ex.id, {});
+  const campos = ex.campos.map((c, i) => {
+    const id = `${ex.id}-f${i}`;
+    const ta = el('textarea', {id, rows: c.linhas || 3, placeholder: c.exemplo || ''});
+    ta.value = salvo[i] || '';
+    ta.addEventListener('input', () => { salvo[i] = ta.value; store.set('fm-' + ex.id, salvo); verifica(); });
+    return {c, ta, node: el('div', {class: 'ctl'}, el('label', {for: id}, el('span', {}, el('b', {}, c.titulo), c.dica ? el('span', {class: 'muted'}, ' · ' + c.dica) : null)), ta)};
+  });
+  const res = el('span', {class: 'result'});
+  const verifica = () => { const n = campos.filter(k => k.ta.value.trim().length >= 3).length; res.textContent = `${n} de ${campos.length} campos preenchidos`; res.className = 'result ' + (n === campos.length ? 'ok' : ''); if (n === campos.length) marcar(ex.id, true); };
+  const copiar = async (ev) => {
+    const txt = campos.map(k => `${k.c.titulo}\n${k.ta.value.trim() || '(em branco)'}`).join('\n\n');
+    try { await navigator.clipboard.writeText(txt); ev.target.textContent = 'Copiado'; } catch (e) { const t = el('textarea', {rows: 8}); t.value = txt; box.append(t); t.select(); ev.target.textContent = 'Selecione e copie o texto abaixo'; }
+    setTimeout(() => ev.target.textContent = 'Copiar o plano', 2500);
+  };
+  box.append(el('div', {class: 'campos'}, campos.map(k => k.node)), el('div', {class: 'acoes'}, el('button', {class: 'btn btn-g', type: 'button', onclick: copiar}, 'Copiar o plano'), res));
+  verifica();
+};
+
+// simuladores específicos (definidos por módulo)
+const SIMS = {};
+TIPOS.sim = (ex, box) => SIMS[ex.sim](ex, box, ok => marcar(ex.id, ok));
+</script>
+<script>
+
+</script>
+<script>
+// ---------- montagem ----------
+const toc = $('#toc'), cont = $('#aulas');
+MOD.aulas.forEach(a => {
+  const sec = el('section', {class: 'aula', id: 'aula-' + a.n.replace('.', '-')});
+  sec.append(el('div', {class: 'aula-head'}, el('p', {class: 'eyebrow'}, `Aula ${a.n}`), el('h2', {}, a.titulo), a.intro ? el('p', {class: 'intro', html: a.intro}) : null));
+  a.exercicios.forEach(ex => {
+    todos.push(ex.id);
+    const box = el('div', {class: 'ex', id: ex.id});
+    box.append(el('div', {class: 'ex-head'}, el('h3', {}, ex.titulo), el('span', {class: 'estado', id: 'st-' + ex.id}, 'A fazer')));
+    if (ex.instr) box.append(el('p', {class: 'instr', html: ex.instr}));
+    TIPOS[ex.tipo](ex, box);
+    if (ex.nota) box.append(el('p', {class: 'aviso', html: ex.nota}));
+    sec.append(box);
+  });
+  cont.append(sec);
+  toc.append(el('a', {href: '#' + sec.id, 'data-ex': a.exercicios.map(e => e.id).join(',')}, `${a.n} ${a.curto || a.titulo}`));
+});
+todos.forEach(id => { if (feitos.has(id)) marcar(id, true); });
+atualizar();
+</script>
+
+</body>
+</html>

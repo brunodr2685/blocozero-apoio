@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Exercícios do Módulo 6</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: caderno de exercícios escuro, igual aos vídeos do curso; uma coluna de 860px, cada aula é uma seção com o exercício como bancada. Tema único escuro, por escolha. */
+:root{
+  color-scheme: dark;
+  --bg:#0B1020; --panel:#121A2F; --panel-2:#0F1628; --line:#26324F; --line-2:#33416A;
+  --text:#EEF2F8; --soft:#C9D2E6; --muted:#8C99B6; --amber:#FFB020; --amber-ink:#1A1300; --teal:#2DD4BF; --red:#F43F5E; --green:#22C55E;
+  --display:"Archivo","Arial Black",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --s-1:clamp(.82rem,.8rem + .1vw,.88rem); --s0:clamp(1rem,.96rem + .2vw,1.06rem);
+  --s1:clamp(1.15rem,1.08rem + .4vw,1.32rem); --s2:clamp(1.45rem,1.25rem + 1vw,1.9rem); --s3:clamp(1.9rem,1.5rem + 2vw,2.8rem);
+  --r:14px; --col:880px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:var(--s0);line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:var(--col);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:var(--s3);font-weight:850}
+h2{font-size:var(--s2);font-weight:800}
+h3{font-size:var(--s1);font-weight:750}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:var(--s-1);letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-family:var(--display);font-stretch:125%;font-weight:850;letter-spacing:.14em;font-size:.9rem;white-space:nowrap}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:var(--s-1);color:var(--muted);white-space:nowrap}
+.bar{width:clamp(70px,18vw,160px);height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+
+header.hero{padding-block:clamp(36px,6vw,64px) 24px;display:grid;gap:14px}
+header.hero .lead{color:var(--soft);max-width:62ch}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.toc a{font-family:var(--mono);font-size:var(--s-1);text-decoration:none;color:var(--soft);border:1px solid var(--line-2);border-radius:99px;padding:4px 12px;display:inline-flex;gap:8px;align-items:center}
+.toc a.feito{border-color:rgba(34,197,94,.5);color:var(--green)}
+.toc a.feito::before{content:"✓"}
+
+section.aula{padding-block:clamp(32px,5vw,52px);border-top:1px solid var(--line);display:grid;gap:18px;scroll-margin-top:70px}
+.aula-head{display:grid;gap:8px}
+.aula-head .intro{color:var(--soft);max-width:66ch}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,3vw,24px);display:grid;gap:16px;min-width:0}
+.ex-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.ex-head h3{font-size:var(--s1)}
+.estado{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;border:1px solid var(--line-2);color:var(--muted)}
+.estado.ok{border-color:rgba(34,197,94,.5);color:var(--green);background:rgba(34,197,94,.08)}
+.instr{color:var(--soft);font-size:var(--s-1)}
+.aviso{font-size:var(--s-1);color:var(--muted);border-left:2px solid var(--line-2);padding-left:10px}
+
+/* itens de classificação e escolha */
+.itens{display:grid;gap:10px}
+.item{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:10px;min-width:0}
+.item.certo{border-color:rgba(34,197,94,.55)}
+.item.errado{border-color:rgba(244,63,94,.65)}
+.item .txt{min-width:0}
+.item .txt b{font-weight:600}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px}
+.op{font:inherit;font-size:var(--s-1);font-weight:500;color:var(--soft);background:transparent;border:1px solid var(--line-2);border-radius:99px;padding:6px 14px;cursor:pointer;min-height:36px;text-align:left}
+.op:hover{border-color:var(--muted);color:var(--text)}
+.op[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:600}
+.item.certo .op[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#04210F}
+.item.errado .op[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.op.gabarito{border-color:var(--green);color:var(--green)}
+.expl{font-size:var(--s-1);color:var(--soft);border-top:1px dashed var(--line-2);padding-top:8px}
+.expl b{color:var(--text)}
+
+/* números */
+.campos{display:grid;gap:10px}
+.campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.campo.certo{border-color:rgba(34,197,94,.55)} .campo.errado{border-color:rgba(244,63,94,.65)}
+.campo .expl{grid-column:1/-1}
+@media (max-width:560px){.campo{grid-template-columns:1fr}}
+.inp{display:flex;align-items:center;gap:8px}
+input[type=number],input[type=text],select,textarea{background:var(--bg);border:1px solid var(--line-2);border-radius:9px;color:var(--text);font:500 1rem/1.3 var(--mono);padding:9px 11px;min-width:0}
+input[type=number]{width:9.5em}
+textarea{width:100%;font-family:var(--body);resize:vertical}
+.un{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+
+.acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;font:inherit;font-weight:600;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-p{background:var(--amber);color:var(--amber-ink)} .btn-p:hover{filter:brightness(1.07)}
+.btn-g{background:transparent;color:var(--text);border-color:var(--line-2)} .btn-g:hover{border-color:var(--muted)}
+.btn-sm{min-height:34px;padding:0 14px;font-size:var(--s-1)}
+.result{font-family:var(--mono);font-size:var(--s-1);color:var(--muted)}
+.result.ok{color:var(--green)} .result.mais{color:var(--amber)}
+
+/* ordenar */
+.ordem{display:grid;gap:8px;counter-reset:o}
+.ordem .linha{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ordem .linha::before{counter-increment:o;content:counter(o);font-family:var(--mono);color:var(--amber);font-weight:600;width:1.6em;text-align:center}
+.ordem .linha.certo{border-color:rgba(34,197,94,.55)} .ordem .linha.errado{border-color:rgba(244,63,94,.65)}
+.setas{display:flex;gap:6px}
+.setas button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--soft);cursor:pointer;font:600 1rem var(--mono)}
+.setas button:hover{border-color:var(--muted);color:var(--text)}
+
+/* checklist */
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--green);margin-top:3px;flex:none}
+.check .g{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-top:6px}
+
+/* simuladores */
+.sim{display:grid;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.kpi{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px;min-width:0}
+.kpi span{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-family:var(--display);font-stretch:110%;font-size:var(--s1);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi.am b{color:var(--amber)} .kpi.tl b{color:var(--teal)} .kpi.rd b{color:var(--red)} .kpi.gr b{color:var(--green)}
+.ctl{display:grid;gap:6px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:var(--s-1);color:var(--soft)}
+.ctl label output{font-family:var(--mono);color:var(--text)}
+input[type=range]{width:100%;accent-color:var(--amber)}
+.tabela{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:var(--s-1);font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--panel-2)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+canvas{width:100%;max-width:100%;display:block;border-radius:12px;background:var(--panel-2);border:1px solid var(--line)}
+.log{font-family:var(--mono);font-size:.8rem;color:var(--soft);background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:180px;overflow:auto;display:grid;gap:4px}
+.log .e{color:var(--red)} .log .k{color:var(--green)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:var(--s-1);display:grid;gap:6px}
+</style>
+</head>
+<body>
+
+
+<div class="top"><div class="wrap">
+  <span class="brand"><svg width="22" height="22" viewBox="0 0 64 64" fill="none" stroke="#FFB020" stroke-width="5" stroke-linejoin="round" aria-hidden="true"><path d="M32 6 56 19v26L32 58 8 45V19Z"/><path d="M8 19l24 13 24-13M32 32v26"/></svg>BLOCO ZERO</span>
+  <div class="prog" aria-live="polite"><span id="progTxt">0 de 0</span><span class="bar"><i id="progBar"></i></span></div>
+</div></div>
+
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Bloco Zero · Módulo 6 · exercícios</p>
+    <h1>DeFi na prática</h1>
+    <p class="lead">Mexa numa corretora automática, escolha tolerâncias de deslizamento, meça a perda impermanente e calcule preços de liquidação.</p>
+    <nav class="toc" id="toc" aria-label="Aulas"></nav>
+  </header>
+  <div id="aulas"></div>
+  <footer>
+    <p>Exercícios do curso Bloco Zero. Os nomes, preços e números são fictícios e servem só para praticar.</p>
+    <p>Nada aqui é recomendação de investimento. O seu progresso fica salvo só neste navegador.</p>
+  </footer>
+</main>
+
+<script>
+const MOD = {"id": "m6", "titulo": "Exercícios do Módulo 6", "eyebrow": "Bloco Zero · Módulo 6 · exercícios", "h1": "DeFi na prática", "lead": "Mexa numa corretora automática, escolha tolerâncias de deslizamento, meça a perda impermanente e calcule preços de liquidação.", "sims": ["amm", "perda"], "aulas": [{"n": "6.1", "titulo": "A corretora automática", "curto": "AMM", "exercicios": [{"id": "m6-1", "tipo": "sim", "sim": "amm", "titulo": "Simulador de AMM: 10 ETH e 20.000 dólares", "instr": "Faça trocas de tamanhos diferentes e veja o preço mudar. Conclua fazendo três trocas diferentes.", "nota": "Repare: comprar 1 ETH sai acima de US$ 2.000, e comprar 8 ETH custa uma fortuna por unidade. Quanto mais sai de uma moeda, mais cara ela fica."}]}, {"n": "6.2", "titulo": "A troca e o deslizamento", "curto": "Tolerância", "exercicios": [{"id": "m6-2", "tipo": "classificar", "titulo": "Escolha a tolerância de deslizamento", "categorias": ["0,1%", "0,5%", "3%", "15%"], "itens": [{"texto": "Trocar dois dólares digitais entre si, numa piscina enorme.", "certo": "0,1%", "porque": "Pares estáveis quase não mexem: tolerância mínima."}, {"texto": "Trocar ether por um dólar digital, numa piscina grande e movimentada.", "certo": "0,5%", "porque": "Um valor comum para moedas grandes. Mais que isso abre espaço para robôs."}, {"texto": "Comprar um token pequeno, com liquidez baixa e preço mudando rápido.", "certo": "3%", "porque": "Pode precisar de mais folga, mas aceite o risco de pagar mais caro."}, {"texto": "Um site desconhecido diz que a troca \"só funciona com 15%\".", "certo": "15%", "porque": "Pergunta-pegadinha: é o que o site pede, e é um convite para o ataque sanduíche. Melhor não fazer a troca."}, {"texto": "Trocar USDC por USDT para pagar uma conta.", "certo": "0,1%"}]}]}, {"n": "6.3", "titulo": "Piscinas de liquidez e perda impermanente", "curto": "Perda impermanente", "exercicios": [{"id": "m6-3", "tipo": "sim", "sim": "perda", "titulo": "Calculadora de perda impermanente", "instr": "Mova o preço e as taxas. Conclua colocando o preço em 4× (ou 0,25×) e veja a perda chegar perto de 20%.", "nota": "Com o preço de volta a 1×, a perda some. Ela vira perda de verdade quando você retira com o preço longe do início."}, {"id": "m6-3b", "tipo": "classificar", "titulo": "Compare três piscinas", "instr": "Use a calculadora para decidir em qual piscina as taxas provavelmente cobrem a perda impermanente.", "categorias": ["Taxas cobrem", "Taxas não cobrem"], "itens": [{"texto": "USDC/USDT: preço praticamente parado (1×), taxas de 2% no período.", "certo": "Taxas cobrem", "porque": "Sem mudança de preço, quase não há perda: sobram as taxas."}, {"texto": "ETH/USDC: o ether dobrou (2×), taxas de 8% no período.", "certo": "Taxas cobrem", "porque": "Perda de cerca de 5,7%, menor que 8% de taxas."}, {"texto": "TOKEN-NOVO/USDC: o token caiu para 25% (0,25×), taxas de 12% no período.", "certo": "Taxas não cobrem", "porque": "Perda de 20% relativa a guardar, acima dos 12% de taxas. E ainda há a queda do próprio token."}]}]}, {"n": "6.4", "titulo": "Empréstimos", "curto": "Liquidação", "exercicios": [{"id": "m6-4", "tipo": "numerico", "titulo": "Em que preço a posição seria liquidada?", "instr": "Considere um protocolo fictício que liquida quando a dívida chega a 80% do valor da garantia.", "perguntas": [{"texto": "Garantia: 1 ETH. Dívida: 1.200 dólares digitais. Em que preço do ETH a posição é liquidada?", "antes": "US$", "resposta": 1500, "tol": 1, "mostra": "US$ 1.500", "conta": "1.200 ÷ 0,80 = 1.500. Se 1 ETH valer menos que US$ 1.500, a dívida passa de 80% da garantia."}, {"texto": "Garantia: 2 ETH. Dívida: 1.200. Em que preço?", "antes": "US$", "resposta": 750, "tol": 1, "mostra": "US$ 750", "conta": "1.200 ÷ 0,80 ÷ 2 = 750. Mais garantia, mais distância até a liquidação."}, {"texto": "Garantia: 0,5 BTC. Dívida: 20.000. Em que preço do BTC?", "antes": "US$", "resposta": 50000, "tol": 1, "mostra": "US$ 50.000", "conta": "20.000 ÷ 0,80 ÷ 0,5 = 50.000."}, {"texto": "Com o ETH a US$ 2.000, quanto ele pode cair, em porcentagem, até liquidar a primeira posição?", "un": "%", "resposta": 25, "tol": 0.1, "mostra": "25%", "conta": "De 2.000 para 1.500 é uma queda de 25%. Em cripto, isso acontece em dias."}]}]}, {"n": "6.5", "titulo": "Staking", "curto": "Staking", "exercicios": [{"id": "m6-5", "tipo": "classificar", "titulo": "Qual risco é esse?", "categorias": ["Preço", "Prazo", "Punição", "Plataforma"], "itens": [{"texto": "Você recebe 5% ao ano em SOL, mas o SOL cai 40%.", "certo": "Preço"}, {"texto": "Você quer vender, mas desfazer o staking leva duas semanas.", "certo": "Prazo"}, {"texto": "O validador para quem você delegou ficou fora do ar e teve moedas cortadas.", "certo": "Punição", "porque": "É o slashing, que pode atingir quem delegou."}, {"texto": "A corretora onde você fazia staking trava os saques.", "certo": "Plataforma"}, {"texto": "O contrato de staking líquido tem uma falha e é explorado por um atacante.", "certo": "Plataforma", "porque": "Risco de código: mais uma camada de risco."}]}]}]};
+</script>
+<script>
+// ---------- utilitários ----------
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') e.className = v; else if (k === 'html') e.innerHTML = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v !== undefined && v !== null) e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) e.append(k.nodeType ? k : document.createTextNode(k));
+  return e;
+};
+const fmt = (v, c = 2) => Number(v).toLocaleString('pt-BR', {minimumFractionDigits: c, maximumFractionDigits: c});
+const brl = v => 'R$ ' + fmt(v, 2);
+const usd = v => 'US$ ' + fmt(v, 2);
+const embaralha = (arr, seed) => { const a = arr.slice(); let s = seed || 7; for (let i = a.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; const j = Math.floor(s / 233280 * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('bz-' + MOD.id + '-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('bz-' + MOD.id + '-' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const parseNum = s => { if (s == null) return NaN; s = String(s).trim().replace(/\s/g, '').replace(/^R\$|^US\$/i, ''); if (/,\d+$/.test(s) || (s.includes(',') && s.includes('.'))) s = s.replace(/\./g, '').replace(',', '.'); return parseFloat(s); };
+
+// ---------- progresso ----------
+const feitos = new Set(store.get('feitos', []));
+const todos = [];
+function marcar(id, ok) {
+  if (ok) feitos.add(id); store.set('feitos', [...feitos]);
+  const st = document.getElementById('st-' + id); if (st && feitos.has(id)) { st.textContent = 'Concluído'; st.classList.add('ok'); }
+  atualizar();
+}
+function atualizar() {
+  const n = todos.filter(i => feitos.has(i)).length;
+  $('#progTxt').textContent = `${n} de ${todos.length} feitos`;
+  $('#progBar').style.width = (todos.length ? 100 * n / todos.length : 0) + '%';
+  document.querySelectorAll('.toc a').forEach(a => { const ids = a.dataset.ex.split(','); a.classList.toggle('feito', ids.every(i => feitos.has(i))); });
+}
+
+// ---------- tipos de exercício ----------
+const TIPOS = {};
+
+// classificar: cada item recebe uma categoria; opções podem variar por item
+TIPOS.classificar = (ex, box) => {
+  const cats = ex.categorias;
+  const itens = ex.embaralhar === false ? ex.itens : embaralha(ex.itens, ex.itens.length * 13 + 5);
+  const esc = {};
+  const lista = el('div', {class: 'itens'});
+  itens.forEach((it, i) => {
+    const ops = it.opcoes || cats;
+    const row = el('div', {class: 'item'});
+    const bts = ops.map((c, k) => el('button', {class: 'op', type: 'button', 'aria-pressed': 'false', onclick: () => {
+      esc[i] = k; bts.forEach((b, j) => b.setAttribute('aria-pressed', j === k ? 'true' : 'false')); row.classList.remove('certo', 'errado'); exp.hidden = true; bts.forEach(b => b.classList.remove('gabarito'));
+    }}, c));
+    const exp = el('p', {class: 'expl', hidden: ''});
+    row.append(el('div', {class: 'txt', html: it.texto}), el('div', {class: 'opcoes', role: 'group'}, bts), exp);
+    row._it = it; row._ops = ops; row._bts = bts; row._exp = exp;
+    lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach((row, i) => {
+      const it = row._it, ops = row._ops, k = esc[i];
+      const alvo = typeof it.certo === 'number' ? it.certo : ops.indexOf(it.certo);
+      if (k === undefined) { row.classList.remove('certo', 'errado'); return; }
+      resp++;
+      const livre = it.certo === -1, ok = livre || k === alvo; if (ok) certos++;
+      if (livre) { row.classList.remove('certo', 'errado'); return; }
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._bts.forEach((b, j) => b.classList.toggle('gabarito', !ok && j === alvo));
+      if (it.porque) { row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${ops[alvo]}.</b> `) + it.porque; row._exp.hidden = false; }
+    });
+    const n = itens.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    const livres = itens.every(i => i.certo === -1);
+    res.textContent = livres ? (resp < n ? `faltam ${n - resp}` : 'Respondido · exercício concluído') : resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : ' · revise os marcados em vermelho');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir respostas'), res));
+};
+
+// numerico: perguntas com resposta numérica e tolerância
+TIPOS.numerico = (ex, box) => {
+  const lista = el('div', {class: 'campos'});
+  ex.perguntas.forEach((q, i) => {
+    const inp = el('input', {type: 'text', inputmode: 'decimal', id: `${ex.id}-q${i}`, 'aria-label': 'resposta', autocomplete: 'off'});
+    const exp = el('p', {class: 'expl', hidden: ''});
+    const row = el('div', {class: 'campo'}, el('div', {class: 'txt', html: q.texto}), el('div', {class: 'inp'}, q.antes ? el('span', {class: 'un'}, q.antes) : null, inp, q.un ? el('span', {class: 'un'}, q.un) : null), exp);
+    row._q = q; row._inp = inp; row._exp = exp; lista.append(row);
+  });
+  const res = el('span', {class: 'result'});
+  const conferir = () => {
+    let certos = 0, resp = 0;
+    [...lista.children].forEach(row => {
+      const q = row._q, v = parseNum(row._inp.value);
+      if (isNaN(v)) { row.classList.remove('certo', 'errado'); row._exp.hidden = true; return; }
+      resp++;
+      const tol = q.tol ?? Math.max(Math.abs(q.resposta) * 0.01, 0.005);
+      const ok = Math.abs(v - q.resposta) <= tol; if (ok) certos++;
+      row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok);
+      row._exp.innerHTML = (ok ? '<b>Certo.</b> ' : `<b>Resposta: ${q.mostra ?? fmt(q.resposta, q.casas ?? 2)}.</b> `) + (q.conta || '');
+      row._exp.hidden = false;
+    });
+    const n = ex.perguntas.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = resp < n ? `${certos} certos de ${resp} respondidos · faltam ${n - resp}` : `${certos} de ${n} certos` + (certos === n ? ' · exercício concluído' : '');
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir contas'), res,
+    el('span', {class: 'un'}, 'Use vírgula ou ponto para decimais.')));
+};
+
+// ordenar: passos para colocar na ordem certa
+TIPOS.ordenar = (ex, box) => {
+  let ordem = embaralha(ex.passos.map((_, i) => i), 11);
+  if (ordem.every((v, i) => v === i)) ordem.reverse();
+  const lista = el('div', {class: 'ordem'});
+  const res = el('span', {class: 'result'});
+  const desenha = () => {
+    lista.innerHTML = '';
+    ordem.forEach((p, pos) => {
+      lista.append(el('div', {class: 'linha'}, el('span', {}, ex.passos[p]), el('div', {class: 'setas'},
+        el('button', {type: 'button', 'aria-label': 'subir', onclick: () => { if (pos > 0) { [ordem[pos - 1], ordem[pos]] = [ordem[pos], ordem[pos - 1]]; desenha(); } }}, '↑'),
+        el('button', {type: 'button', 'aria-label': 'descer', onclick: () => { if (pos < ordem.length - 1) { [ordem[pos + 1], ordem[pos]] = [ordem[pos], ordem[pos + 1]]; desenha(); } }}, '↓'))));
+    });
+    res.textContent = ''; res.className = 'result';
+  };
+  desenha();
+  const conferir = () => {
+    let certos = 0;
+    [...lista.children].forEach((row, pos) => { const ok = ordem[pos] === pos; if (ok) certos++; row.classList.toggle('certo', ok); row.classList.toggle('errado', !ok); });
+    const n = ordem.length;
+    res.className = 'result ' + (certos === n ? 'ok' : 'mais');
+    res.textContent = certos === n ? 'Ordem certa · exercício concluído' : `${certos} de ${n} na posição certa`;
+    marcar(ex.id, certos === n);
+  };
+  box.append(lista, el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: conferir}, 'Conferir ordem'), res));
+};
+
+// checklist: autoavaliação; conclui quando tudo marcado
+TIPOS.checklist = (ex, box) => {
+  const salvo = store.get('ck-' + ex.id, []);
+  const lista = el('div', {class: 'check'});
+  let grupo = null;
+  ex.itens.forEach((t, i) => {
+    if (typeof t === 'object' && t.grupo) { lista.append(el('p', {class: 'g'}, t.grupo)); return; }
+    const cb = el('input', {type: 'checkbox', id: `${ex.id}-c${i}`});
+    cb.checked = salvo.includes(i);
+    cb.addEventListener('change', () => { const s = [...lista.querySelectorAll('input')].map((c, j) => c.checked ? +c.id.split('-c')[1] : -1).filter(x => x >= 0); store.set('ck-' + ex.id, s); conta(); });
+    lista.append(el('label', {for: cb.id}, cb, el('span', {}, t)));
+  });
+  const res = el('span', {class: 'result'});
+  const conta = () => { const cs = [...lista.querySelectorAll('input')], n = cs.filter(c => c.checked).length; res.textContent = `${n} de ${cs.length} marcados`; res.className = 'result ' + (n === cs.length ? 'ok' : ''); if (n === cs.length) marcar(ex.id, true); };
+  box.append(lista, el('div', {class: 'acoes'}, res));
+  conta();
+};
+
+// formulário livre: campos de texto salvos no navegador + cópia do texto montado
+TIPOS.formulario = (ex, box) => {
+  const salvo = store.get('fm-' + ex.id, {});
+  const campos = ex.campos.map((c, i) => {
+    const id = `${ex.id}-f${i}`;
+    const ta = el('textarea', {id, rows: c.linhas || 3, placeholder: c.exemplo || ''});
+    ta.value = salvo[i] || '';
+    ta.addEventListener('input', () => { salvo[i] = ta.value; store.set('fm-' + ex.id, salvo); verifica(); });
+    return {c, ta, node: el('div', {class: 'ctl'}, el('label', {for: id}, el('span', {}, el('b', {}, c.titulo), c.dica ? el('span', {class: 'muted'}, ' · ' + c.dica) : null)), ta)};
+  });
+  const res = el('span', {class: 'result'});
+  const verifica = () => { const n = campos.filter(k => k.ta.value.trim().length >= 3).length; res.textContent = `${n} de ${campos.length} campos preenchidos`; res.className = 'result ' + (n === campos.length ? 'ok' : ''); if (n === campos.length) marcar(ex.id, true); };
+  const copiar = async (ev) => {
+    const txt = campos.map(k => `${k.c.titulo}\n${k.ta.value.trim() || '(em branco)'}`).join('\n\n');
+    try { await navigator.clipboard.writeText(txt); ev.target.textContent = 'Copiado'; } catch (e) { const t = el('textarea', {rows: 8}); t.value = txt; box.append(t); t.select(); ev.target.textContent = 'Selecione e copie o texto abaixo'; }
+    setTimeout(() => ev.target.textContent = 'Copiar o plano', 2500);
+  };
+  box.append(el('div', {class: 'campos'}, campos.map(k => k.node)), el('div', {class: 'acoes'}, el('button', {class: 'btn btn-g', type: 'button', onclick: copiar}, 'Copiar o plano'), res));
+  verifica();
+};
+
+// simuladores específicos (definidos por módulo)
+const SIMS = {};
+TIPOS.sim = (ex, box) => SIMS[ex.sim](ex, box, ok => marcar(ex.id, ok));
+</script>
+<script>
+SIMS.amm = (ex, box, concluir) => {
+  let x = 10, y = 20000; const K0 = x * y; const log = el('div', {class: 'log'});
+  const k = (l, c) => { const b = el('b', {}); return [el('div', {class: 'kpi ' + c}, el('span', {}, l), b), b]; };
+  const [k1, ex_] = k('ETH na piscina', 'tl'), [k2, ey] = k('Dólar digital na piscina', 'tl'), [k3, ep] = k('Preço do ETH', 'am');
+  const q = el('input', {type: 'range', min: 0.5, max: 8, step: 0.5, value: 1, id: ex.id + '-q'}), qo = el('output', {}, '');
+  let feitas = new Set();
+  const desenha = () => { ex_.textContent = fmt(x, 3); ey.textContent = fmt(y, 0); ep.textContent = usd(y / x); qo.textContent = fmt(+q.value, 1) + ' ETH'; };
+  const comprar = () => { const d = +q.value; if (d >= x - 0.01) return; const ny = K0 / (x - d), pago = ny - y; log.prepend(el('div', {}, `Comprou ${fmt(d, 1)} ETH por ${usd(pago)} · preço médio ${usd(pago / d)} · novo preço ${usd(ny / (x - d))}`)); x -= d; y = ny; feitas.add('c' + d); desenha(); if (feitas.size >= 3) concluir(true); };
+  const vender = () => { const d = +q.value, nx = x + d, ny = K0 / nx, rec = y - ny; log.prepend(el('div', {}, `Vendeu ${fmt(d, 1)} ETH por ${usd(rec)} · preço médio ${usd(rec / d)} · novo preço ${usd(ny / nx)}`)); x = nx; y = ny; feitas.add('v' + d); desenha(); if (feitas.size >= 3) concluir(true); };
+  q.addEventListener('input', desenha);
+  box.append(el('div', {class: 'sim'}, el('div', {class: 'grid3'}, k1, k2, k3),
+    el('p', {class: 'instr mono'}, `x × y = k → ${fmt(10, 0)} × ${fmt(20000, 0)} = ${fmt(K0, 0)} (fica sempre igual)`),
+    el('div', {class: 'ctl'}, el('label', {for: q.id}, 'Tamanho da troca', qo), q),
+    el('div', {class: 'acoes'}, el('button', {class: 'btn btn-p', type: 'button', onclick: comprar}, 'Comprar ETH'), el('button', {class: 'btn btn-g', type: 'button', onclick: vender}, 'Vender ETH'),
+      el('button', {class: 'btn btn-g btn-sm', type: 'button', onclick: () => { x = 10; y = 20000; log.innerHTML = ''; desenha(); }}, 'Recomeçar')), log));
+  desenha();
+};
+
+SIMS.perda = (ex, box, concluir) => {
+  const r = el('input', {type: 'range', min: 0.1, max: 10, step: 0.05, value: 2, id: ex.id + '-r'}), ro = el('output', {});
+  const tx = el('input', {type: 'range', min: 0, max: 40, step: 0.5, value: 6, id: ex.id + '-tx'}), txo = el('output', {});
+  const k = (l, c) => { const b = el('b', {}); return [el('div', {class: 'kpi ' + c}, el('span', {}, l), b), b]; };
+  const [k1, eh] = k('Só guardar (US$ 1.000 no início)', ''), [k2, ep] = k('Na piscina, sem taxas', 'tl'), [k3, ei] = k('Perda impermanente', 'rd'), [k4, ef] = k('Piscina + taxas − guardar', '');
+  const cv = el('canvas', {width: 800, height: 260});
+  const IL = p => 2 * Math.sqrt(p) / (1 + p) - 1;
+  const calc = () => {
+    const p = +r.value, t = +tx.value / 100;
+    ro.textContent = p >= 1 ? `subiu ${fmt(p, 2)}×` : `caiu para ${fmt(p * 100, 0)}%`; txo.textContent = fmt(+tx.value, 1) + '% do depósito';
+    const hold = 500 * p + 500, pool = 1000 * Math.sqrt(p), il = IL(p);
+    eh.textContent = usd(hold); ep.textContent = usd(pool); ei.textContent = fmt(il * 100) + '%';
+    const res = pool + 1000 * t - hold; ef.textContent = (res >= 0 ? '+' : '') + usd(res); ef.parentElement.className = 'kpi ' + (res >= 0 ? 'gr' : 'rd');
+    if (Math.abs(p - 4) < 0.06 || Math.abs(p - 0.25) < 0.02) concluir(true);
+    // gráfico da perda impermanente
+    const c = cv.getContext('2d'), W = cv.width, H = cv.height, css = getComputedStyle(document.documentElement);
+    c.clearRect(0, 0, W, H); const X = v => 50 + Math.log(v / 0.1) / Math.log(100) * (W - 70), Y = v => 20 + (-v) / 0.5 * (H - 50);
+    c.strokeStyle = css.getPropertyValue('--line'); c.fillStyle = css.getPropertyValue('--muted'); c.font = '12px IBM Plex Mono, monospace';
+    [0, -0.1, -0.2, -0.3, -0.4, -0.5].forEach(v => { c.beginPath(); c.moveTo(50, Y(v)); c.lineTo(W - 20, Y(v)); c.stroke(); c.fillText(fmt(v * 100, 0) + '%', 6, Y(v) + 4); });
+    [0.1, 0.25, 0.5, 1, 2, 4, 10].forEach(v => c.fillText(fmt(v, v < 1 ? 2 : 0) + '×', X(v) - 10, H - 8));
+    c.strokeStyle = css.getPropertyValue('--red'); c.lineWidth = 3; c.beginPath();
+    for (let i = 0; i <= 200; i++) { const v = 0.1 * Math.pow(100, i / 200); i ? c.lineTo(X(v), Y(IL(v))) : c.moveTo(X(v), Y(IL(v))); } c.stroke();
+    c.fillStyle = css.getPropertyValue('--amber'); c.beginPath(); c.arc(X(p), Y(il), 6, 0, 7); c.fill();
+  };
+  [r, tx].forEach(x => x.addEventListener('input', calc));
+  box.append(el('div', {class: 'sim'}, el('div', {class: 'grid2'}, el('div', {class: 'ctl'}, el('label', {for: r.id}, 'Preço da moeda A em relação à B', ro), r), el('div', {class: 'ctl'}, el('label', {for: tx.id}, 'Taxas recebidas no período', txo), tx)),
+    el('div', {class: 'grid2'}, k1, k2, k3, k4), cv, el('p', {class: 'un'}, 'Curva: perda impermanente conforme o preço muda (escala logarítmica). O ponto âmbar é a sua situação.')));
+  calc();
+};
+
+
+</script>
+<script>
+// ---------- montagem ----------
+const toc = $('#toc'), cont = $('#aulas');
+MOD.aulas.forEach(a => {
+  const sec = el('section', {class: 'aula', id: 'aula-' + a.n.replace('.', '-')});
+  sec.append(el('div', {class: 'aula-head'}, el('p', {class: 'eyebrow'}, `Aula ${a.n}`), el('h2', {}, a.titulo), a.intro ? el('p', {class: 'intro', html: a.intro}) : null));
+  a.exercicios.forEach(ex => {
+    todos.push(ex.id);
+    const box = el('div', {class: 'ex', id: ex.id});
+    box.append(el('div', {class: 'ex-head'}, el('h3', {}, ex.titulo), el('span', {class: 'estado', id: 'st-' + ex.id}, 'A fazer')));
+    if (ex.instr) box.append(el('p', {class: 'instr', html: ex.instr}));
+    TIPOS[ex.tipo](ex, box);
+    if (ex.nota) box.append(el('p', {class: 'aviso', html: ex.nota}));
+    sec.append(box);
+  });
+  cont.append(sec);
+  toc.append(el('a', {href: '#' + sec.id, 'data-ex': a.exercicios.map(e => e.id).join(',')}, `${a.n} ${a.curto || a.titulo}`));
+});
+todos.forEach(id => { if (feitos.has(id)) marcar(id, true); });
+atualizar();
+</script>
+
+</body>
+</html>
